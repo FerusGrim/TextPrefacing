@@ -29,7 +29,7 @@ public class CommandColor implements CommandExecutor {
             if (args.length < 1) {
                 sender.sendMessage(plugin.mStart + "Missing color!");
             } else {
-                pm.updateColor(((Player) sender).getUniqueId().toString(), args[0]);
+                pm.updateColor(((Player) sender).getUniqueId().toString(), args[0].toLowerCase());
                 TagAPI.refreshPlayer((Player) sender);
                 sender.sendMessage(plugin.mStart + "Changed name color to : " + args[0]);
             }
