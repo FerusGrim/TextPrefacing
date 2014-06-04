@@ -16,6 +16,7 @@ public class TextPrefacing extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         pm = new PlayerManager(this);
         getServer().getPluginManager().registerEvents(pm, this);
         getCommand("color").setExecutor(new CommandColor(this, pm));
