@@ -4,3 +4,8 @@ author: FerusGrim
 website: http://caelumcraft.net/
 description: A thingy for text.
 main: net.caelumcraft.TextPrefacing.TextPrefacing
+commands:
+  color:
+    description: Change name color.
+  name:
+    description: Change name.
