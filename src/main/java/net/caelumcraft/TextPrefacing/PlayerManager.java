@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 public class PlayerManager implements Listener {
     private TextPrefacing plugin;
