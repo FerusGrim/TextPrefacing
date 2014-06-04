@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.kitteh.tag.TagAPI;
 
 import java.util.logging.Level;
 
@@ -30,6 +31,7 @@ public class CommandName implements CommandExecutor {
             } else {
                 if (args[0].matches("[a-zA-Z0-9_]{3,16}")) {
                     pm.updateName(((Player) sender).getUniqueId().toString(), args[0], (Player) sender);
+                    TagAPI.refreshPlayer((Player) sender);
                     sender.sendMessage(plugin.mStart + "Changed username to : " + args[0]);
                 } else {
                     sender.sendMessage(plugin.mStart + "Invalid name!");

@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.kitteh.tag.TagAPI;
 
 import java.util.logging.Level;
 
@@ -29,6 +30,7 @@ public class CommandColor implements CommandExecutor {
                 sender.sendMessage(plugin.mStart + "Missing color!");
             } else {
                 pm.updateColor(((Player) sender).getUniqueId().toString(), args[0]);
+                TagAPI.refreshPlayer((Player) sender);
                 sender.sendMessage(plugin.mStart + "Changed name color to : " + args[0]);
             }
         } else {
