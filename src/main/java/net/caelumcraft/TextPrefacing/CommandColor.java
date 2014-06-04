@@ -29,6 +29,7 @@ public class CommandColor implements CommandExecutor {
                 sender.sendMessage(plugin.mStart + "Missing color!");
             } else {
                 pm.updateColor(((Player) sender).getUniqueId().toString(), args[0]);
+                sender.sendMessage(plugin.mStart + "Changed name color to : " + args[0]);
             }
         } else {
             plugin.getLogger().log(Level.WARNING, "Must be done as player!");
