@@ -49,7 +49,7 @@ public class CommandColor implements CommandExecutor {
                 sender.sendMessage(plugin.mStart + "Valid Colors!");
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&0BLACK &1DARK_BLUE &2DARK_GREEN &3DARK_AQUA &4DARK_RED &5DARK_PURPLE &6GOLD &7GRAY &8DARK_GRAY &9BLUE &aGREEN &bAQUA &cRED &dLIGHT_PURPLE &eYELLOW &fWHITE"));
             } else {
-                if (validColors.contains(args[0])) {
+                if (validColors.contains(args[0].toLowerCase())) {
                     pm.updateColor(((Player) sender).getUniqueId().toString(), args[0].toLowerCase());
                     TagAPI.refreshPlayer((Player) sender);
                     sender.sendMessage(plugin.mStart + "Changed name color to : " + args[0]);
