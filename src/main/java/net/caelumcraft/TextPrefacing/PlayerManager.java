@@ -75,7 +75,7 @@ public class PlayerManager implements Listener {
     }
 
     public void updateName(String uuid, String name, Player player) {
-        plugin.getConfig().set("Players." + uuid + ".color", name);
+        plugin.getConfig().set("Players." + uuid + ".name", name);
         plugin.saveConfig();
         playerNames.put(uuid, name);
         player.setDisplayName(name);
