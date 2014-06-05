@@ -17,14 +17,20 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class PlayerManager implements Listener {
     private TextPrefacing plugin;
-    private HashMap<String, ChatColor> playerColors = new HashMap<>(getColors());
-    private HashMap<String, String> playerNames = new HashMap<>(getNames());
+    private HashMap<String, String> playerNames;
+    private HashMap<String, ChatColor> playerColors;
 
     public PlayerManager(TextPrefacing plugin) {
         this.plugin = plugin;
+        if (!plugin.getConfig().isSet("Players")) {
+            plugin.getConfig().createSection("Players");
+        }
+        playerNames = new HashMap<>(getNames());
+        playerColors = new HashMap<>(getColors());
     }
 
     @EventHandler (priority = EventPriority.HIGH)
@@ -61,9 +67,10 @@ public class PlayerManager implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     private void onAsyncPlayerReceiveNameTagEvent(AsyncPlayerReceiveNameTagEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString();
-        ChatColor color = playerColors.get(uuid);
+        Player player = event.getNamedPlayer();
+        String uuid = player.getUniqueId().toString();
         String name = playerNames.get(uuid);
+        ChatColor color = playerColors.get(uuid);
         event.setTag(color + name);
     }
 
@@ -78,15 +85,7 @@ public class PlayerManager implements Listener {
     public void updateColor(String uuid, String color) {
         plugin.getConfig().set("Players." + uuid + ".color", color);
         plugin.saveConfig();
-        playerColors.put(uuid, getColorCode(color, null));
-    }
-
-    private HashMap<String, ChatColor> getColors() {
-        HashMap<String, ChatColor> colors = new HashMap<>();
-        for (String uuid : plugin.getConfig().getConfigurationSection("Players").getKeys(false)) {
-            colors.put(uuid, getColorCode(uuid, null));
-        }
-        return colors;
+        playerColors.put(uuid, getChatColor(color, null));
     }
 
     private HashMap<String, String> getNames() {
@@ -97,8 +96,22 @@ public class PlayerManager implements Listener {
         return names;
     }
 
-    private ChatColor getColorCode(String uuid, CommandSender sender) {
-        switch(plugin.getConfig().getString("Players." + uuid + ".color")) {
+    private HashMap<String, ChatColor> getColors() {
+        HashMap<String, ChatColor> colors = new HashMap<>();
+        for (String uuid : plugin.getConfig().getConfigurationSection("Players").getKeys(false)) {
+            if (uuid != null && !uuid.isEmpty()) {
+                colors.put(uuid, getColorCode(uuid));
+            }
+        }
+        return colors;
+    }
+
+    private ChatColor getColorCode(String uuid) {
+        return getChatColor(plugin.getConfig().getString("Players." + uuid + ".color"), null);
+    }
+
+    private ChatColor getChatColor(String color, CommandSender sender) {
+        switch(color) {
             case "black":
                 return ChatColor.BLACK;
             case "dark_blue":
